@@ -39,7 +39,7 @@ def home():
 
 @app.route("/delete", methods=["POST"])
 def delete():
-    title = request.form.get("content")
+    content = request.form.get("content")
     message = Message.query.filter_by(content=content).first()
     db.session.delete(message)
     db.session.commit()

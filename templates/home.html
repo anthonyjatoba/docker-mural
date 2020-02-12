@@ -10,7 +10,7 @@
 
     <h2>Messages</h2>
     <table>
-      {% for message in reverse(messages) %}
+      {% for message in messages|reverse %}
         <tr>
           <td>
             {{message.content}} 
