@@ -1,0 +1,28 @@
+<html>
+  <body>
+    <h1>Mural</h1>
+
+    <h2>Add Message</h2>
+    <form method="POST" action="/">
+      <input type="text" name="content">
+      <input type="submit" value="Add">
+    </form>
+
+    <h2>Messages</h2>
+    <table>
+      {% for message in reverse(messages) %}
+        <tr>
+          <td>
+            {{message.content}} 
+          </td>
+          <td>
+            <form method="POST" action="./delete" style="display: inline">
+              <input type="hidden" value="{{message.content}}" name="content">
+              <input type="submit" value="Delete">
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+    </table>
+  </body>
+</html>
