@@ -18,17 +18,19 @@ port = int(os.environ.get("PORT", 5000))
 db = SQLAlchemy(app)
 
 class Message(db.Model):
-    content = db.Column(db.String(80), unique=True, nullable=False, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(80), unique=False, nullable=False)
+    name = db.Column(db.String(80), unique=False, nullable=False, primary_key=False)
 
     def __repr__(self):
-        return "<Content: {}>".format(self.content)
+        return "<Id: {}, Content: {}, Name: {}>".format(self.id, self.content, self.name)
 
 @app.route('/', methods=["GET", "POST"])
 def home():
     messages = None
     if request.form:
         try:
-            message = Message(content=request.form.get("content"))
+            message = Message(content=request.form.get("content"), name=request.form.get("name"))
             db.session.add(message)
             db.session.commit()
         except Exception as e:
@@ -39,8 +41,8 @@ def home():
 
 @app.route("/delete", methods=["POST"])
 def delete():
-    content = request.form.get("content")
-    message = Message.query.filter_by(content=content).first()
+    id = request.form.get("id")
+    message = Message.query.filter_by(id=id).first()
     db.session.delete(message)
     db.session.commit()
     return redirect("/")

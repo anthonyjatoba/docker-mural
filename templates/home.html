@@ -1,28 +1,71 @@
 <html>
+  <head>
+    <title>Mural</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
   <body>
-    <h1>Mural</h1>
+    <div class="container">
+      <div class="row">
+        <div class="card col-md-12 text-center" style="margin-top: 20px">
+          <div class="card-body">
+            <h1>Mural</h1>
 
-    <h2>Add Message</h2>
-    <form method="POST" action="/">
-      <input type="text" name="content">
-      <input type="submit" value="Add">
-    </form>
+            <hr/>
 
-    <h2>Messages</h2>
-    <table>
-      {% for message in messages|reverse %}
-        <tr>
-          <td>
-            {{message.content}} 
-          </td>
-          <td>
-            <form method="POST" action="./delete" style="display: inline">
-              <input type="hidden" value="{{message.content}}" name="content">
-              <input type="submit" value="Delete">
+            <h2>Send Message</h2>
+            <form method="POST" action="/">
+              <div class="form-row align-items-center">
+                <div class="offset-4 col-md-4">
+                  <input type="text" class="form-control mb-2" name="name" placeholder="Insert your name">
+                </div>
+              </div>
+              <div class="form-row align-items-center">
+                <div class="offset-4 col-md-4">
+                  <input type="text" class="form-control mb-2" name="content" placeholder="Write a message">
+                </div>
+              </div>
+              <div class="form-row align-items-center">
+                <div class="offset-4 col-md-4">
+                  <button type="submit" class="btn btn-primary btn-block mb-2">Send</button>
+                </div>
+              </div>
             </form>
-          </td>
-        </tr>
-        {% endfor %}
-    </table>
+
+            <hr/>
+
+            <h2>Messages</h2>
+
+            <div class="offset-3 col-md-6">
+              <div class="card">
+                <div class="card-body" style="padding-top: 0px">
+                  {% if messages|length <= 0 %}
+                    <h5 class="text-muted" style="margin-top:20px">No messages here</h5>
+                  {% else %}  
+                    {% for message in messages|reverse %}
+                    <div class="card" style="margin-top: 20px">
+                      <div class="card-body text-left">
+                        <span class="text-muted">{{ message.name }} - </span>
+                        {{ message.content }}
+                        <form method="POST" action="./delete" style="display: inline">
+                          <input type="hidden" value="{{ message.id }}" name="id">
+                          <button type="submit" value="Delete" class="close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
 </html>
